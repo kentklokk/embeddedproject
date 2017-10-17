@@ -11,5 +11,10 @@ pipeline {
                 sh "make test"
             }
         }
+        stage ('Archive binary'){
+            steps{
+                archiveArtifacts 'out/bin/main'
+            }
+        }
     }
 }
