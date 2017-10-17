@@ -4,7 +4,7 @@
 
 int main(const int argc, const char *argv[])
 {
-    printf("Hello world!\n");
+    printf("Hello world! TEST\n");
 
     if (argc > 1) {
       printf("Number of arguments detected is %d.\n", argc);
