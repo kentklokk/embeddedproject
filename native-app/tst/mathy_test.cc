@@ -9,7 +9,7 @@ TEST_CASE( "mathy add function", "[mathy]" ) {
 
     Mathy::Calculate calc;
 
-    REQUIRE( calc.Add(0, 5) == 5 );
+    REQUIRE( calc.Add(0, 5) == 7 );
     REQUIRE( calc.Add(0, 0) == 0 );
     REQUIRE( calc.Add(5, 0) == 5 );
 
