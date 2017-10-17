@@ -11,9 +11,12 @@ pipeline {
                 sh "make test"
             }
         }
-        stage ('Archive binary'){
+        stage ('Results'){
             steps{
                 archiveArtifacts 'out/bin/main'
+            }
+            steps{
+                archiveArtifacts 'out/bin/results_junit.xml'
             }
         }
     }
