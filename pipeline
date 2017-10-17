@@ -15,10 +15,6 @@ pipeline {
             steps{
                 archiveArtifacts 'out/bin/main'
                 archiveArtifacts 'out/bin/results_junit.xml'
-            }
-        }
-        stage('Publish'){
-            steps{
                 junit 'out/bin/results_junit.xml'
             }
         }
