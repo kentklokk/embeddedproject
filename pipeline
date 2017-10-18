@@ -1,26 +1,26 @@
 pipeline {
-    agent {
-        docker {
-            image 'kentklokk/native-make:1.0'
-        }
-    }
-    stages {
-        stage ('Build'){
-            steps{
-                sh "make clean && make all"
+   agent {
+       docker {
+           image 'praqma/native-gradle'
+           args '-v $HOME/.m2:/home/jenkins/.m2 -v $HOME/.gradle:/home/jenkins/.gradle'
+       }
+   }
+   stages {
+        stage ('Increment version'){
+            steps {
+                sh './gradlew incrementVersion'
             }
         }
-        stage ('Test'){
-            steps{
-                sh "make test"
-            }
-        }
-        stage ('Results'){
-            steps{
-                archiveArtifacts 'out/bin/main'
-                archiveArtifacts 'out/bin/results_junit.xml'
-                junit 'out/bin/results_junit.xml'
-            }
-        }
-    }
+      stage ('Build'){
+         steps{
+             sh './gradlew publish'
+         }
+      }
+      stage ('Results'){
+         steps{
+             junit 'out/bin/results_junit.xml'
+             archiveArtifacts 'build/distributions/*.zip'
+         }
+      }
+   }
 }
