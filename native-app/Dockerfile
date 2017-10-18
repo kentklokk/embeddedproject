@@ -3,4 +3,4 @@
 #docker push kentklokk/native-make:1.0
 
 FROM praqma/native-make
-MAINTAINER Kent Klokk kent.klokk@gmail.c
+MAINTAINER Kent Klokk kent.klokk@gmail.com
