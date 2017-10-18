@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            image 'praqma/native-make:latest'
+            image 'kentklokk/native-make:latest'
         }
     }
     stages {
