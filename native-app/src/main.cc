@@ -1,7 +1,7 @@
 #include <iostream>
 
 //#include "mathy.h"
-#include <mathy>
+#include <mathy.h>
 #include "version.h"
 int main(const int argc, const char *argv[])
 {
