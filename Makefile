@@ -20,7 +20,7 @@ EXEC_NAME        = main
 EXEC_FILE       := $(OUTPUT_DIR)/bin/$(EXEC_NAME)
 FLAGS           := -std=c++11 $(WARNINGS)
 CXXFLAGS        := $(FLAGS)
-LDFLAGS         := $(FLAGS)
+LDFLAGS         := $(FLAGS) -Wl,-Lbuild/resolvedDep/marius/lib -lmathy 
 INC             := -I $(PROJECT_DIR)/inc
 SRC             := $(wildcard $(PROJECT_DIR)/src/*.cc)
 OBJ             := $(SRC:$(PROJECT_DIR)/src/%.cc=$(OUTPUT_DIR)/obj/%.o)
@@ -29,7 +29,7 @@ TEST_EXEC_NAME   = test
 TEST_EXEC_FILE  := $(OUTPUT_DIR)/bin/$(TEST_EXEC_NAME)
 FLAGS_TEST      := $(FLAGS)
 CXXFLAGS_TEST   := $(CXXFLAGS)
-LDFLAGS_TEST    := $(LDFLAGS)
+LDFLAGS_TEST    := $(LDFLAGS) -Wl,-Lbuild/resolvedDep/marius/lib -lmathy 
 INC_TEST        := $(INC) -I $(PROJECT_DIR)/inc
 SRC_TEST        := $(wildcard $(PROJECT_DIR)/tst/*.cc)
 OBJ_TEST        := $(filter-out $(OUTPUT_DIR)/obj/main.o, $(OBJ)) $(SRC_TEST:$(PROJECT_DIR)/tst/%.cc=$(OUTPUT_DIR)/obj/%.o)
@@ -43,23 +43,17 @@ DIR_GUARD		 = mkdir -pv $(@D)
 #-----------------------------------------------------------------------
 
 .PHONY: all
-all: shared_library static_library main test_exe
+all: main test_exe
 
 main: $(EXEC_FILE)
 $(EXEC_FILE): $(OBJ)
 	@$(DIR_GUARD)
+	@pwd
+	@echo Linking $(LDFLAGS) $^ 
 	@$(LD) $(LDFLAGS) $^ -o $@ && echo "[OK]: $@"
 	@$@
 
-static_library: $(OUTPUT_DIR)/lib/libmathy.a
-$(OUTPUT_DIR)/lib/libmathy.a: $(OUTPUT_DIR)/obj/mathy.o
-	@$(DIR_GUARD)
-	@$(AR) $(ARFLAGS) $@ $^ && echo "[OK]: $@"
 
-shared_library: $(OUTPUT_DIR)/lib/libmathy.so
-$(OUTPUT_DIR)/lib/libmathy.so: $(OUTPUT_DIR)/obj/mathy.o
-	@$(DIR_GUARD)
-	@$(CXX) $(LDFLAGS) -shared -o $@ $^ && echo "[OK]: $@"
 
 .PHONY: test
 test: test_exe
