@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            image 'kentklokk/native-make:1.0'
+            image 'kentklokk/native-make-auto:latest'
         }
     }
     stages {
